@@ -1,0 +1,24 @@
+{
+  "id": "conv-1783544880814-5jxnecemt",
+  "providerId": "claude",
+  "title": "Present and explain the concept of hinge propositi...",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1783544880816,
+  "updatedAt": 1783547467509,
+  "lastResponseAt": 1783547467509,
+  "sessionId": "7c74a30b-62ad-4395-a26c-27cba5b1f55c",
+  "selectedModel": "haiku",
+  "providerState": {
+    "providerSessionId": "7c74a30b-62ad-4395-a26c-27cba5b1f55c"
+  },
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 10,
+    "cacheCreationInputTokens": 13141,
+    "cacheReadInputTokens": 21638,
+    "contextWindow": 200000,
+    "contextTokens": 34789,
+    "percentage": 17,
+    "contextWindowIsAuthoritative": true
+  }
+}

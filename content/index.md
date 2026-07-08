@@ -1,1 +1,2 @@
-lalalaa
+hello :D i might send this to multiple people idk, but as it is right now only one person has the link to this, and thats nel, but im gonna start getting into writing, and the initial goal was just to simply write n share it, turns out i ended building a full ass project of storing and organizing notes, so have fun reading this, ill always try to keep in mind that there might be people reading so ill try to leave notes where i can to help :D
+
