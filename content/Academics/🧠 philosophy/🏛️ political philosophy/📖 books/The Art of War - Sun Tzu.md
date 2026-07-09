@@ -6,6 +6,8 @@ tags:
 
 # The Art of War
 
+![[The Art of War - Sun Tzu.jpg]]
+
 *Ancient Chinese strategy on knowing your enemy, knowing yourself, and winning without fighting.*
 
 **Author:** Sun Tzu

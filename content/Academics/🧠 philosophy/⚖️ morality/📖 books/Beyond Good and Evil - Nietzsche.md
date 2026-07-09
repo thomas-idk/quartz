@@ -6,6 +6,8 @@ tags:
 
 # Beyond Good and Evil
 
+![[Beyond Good and Evil - Nietzsche.jpg]]
+
 *A prelude to a philosophy of the future — Nietzsche against the philosophers who came before him.*
 
 **Author:** Friedrich Nietzsche

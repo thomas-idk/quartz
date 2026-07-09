@@ -6,6 +6,8 @@ tags:
 
 # The Problems of Philosophy
 
+![[The Problems of Philosophy - Bertrand Russell.jpg]]
+
 *Russell's short, clear introduction to what we can know and how we could possibly know it.*
 
 **Author:** Bertrand Russell

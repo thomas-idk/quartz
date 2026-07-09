@@ -6,6 +6,8 @@ tags:
 
 # Thoughts Out of Season
 
+![[Thoughts Out of Season - Nietzsche.jpg]]
+
 *Early Nietzsche taking aim at German culture, history, and Wagner.*
 
 **Author:** Friedrich Nietzsche

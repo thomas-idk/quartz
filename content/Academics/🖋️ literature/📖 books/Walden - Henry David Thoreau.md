@@ -6,6 +6,8 @@ tags:
 
 # Walden
 
+![[Walden - Henry David Thoreau.jpg]]
+
 *Two years alone by a pond, and what living deliberately actually requires.*
 
 **Author:** Henry David Thoreau

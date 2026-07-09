@@ -6,6 +6,8 @@ tags:
 
 # Meno
 
+![[Meno - Plato.jpg]]
+
 *Can virtue be taught? Socrates and Meno stumble into the theory of recollection trying to find out.*
 
 **Author:** Plato

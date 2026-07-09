@@ -6,6 +6,8 @@ tags:
 
 # Dialogues
 
+![[Dialogues - Plato.jpg]]
+
 *The collected conversations — Socrates questioning everyone about everything.*
 
 **Author:** Plato

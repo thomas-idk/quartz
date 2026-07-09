@@ -6,6 +6,8 @@ tags:
 
 # Works of Voltaire
 
+![[Works of Voltaire.jpg]]
+
 *Wit, satire, and Enlightenment reason aimed at superstition and injustice alike.*
 
 **Author:** Voltaire

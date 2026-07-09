@@ -6,6 +6,8 @@ tags:
 
 # Principia Ethica
 
+![[Principia Ethica - G.E. Moore.jpg]]
+
 *Moore's 1903 argument that "good" cannot be defined in other terms — the naturalistic fallacy, laid bare.*
 
 **Author:** G. E. Moore

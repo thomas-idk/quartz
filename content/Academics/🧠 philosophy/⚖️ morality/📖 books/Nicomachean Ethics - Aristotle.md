@@ -6,6 +6,8 @@ tags:
 
 # Nicomachean Ethics
 
+![[Nicomachean Ethics - Aristotle.jpg]]
+
 *Aristotle's inquiry into what it means to live well — virtue as habit, happiness as activity, the mean between extremes.*
 
 **Author:** Aristotle

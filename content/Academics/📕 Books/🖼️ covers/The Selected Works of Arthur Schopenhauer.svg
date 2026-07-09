@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300" viewBox="0 0 200 300">
+  <rect width="200" height="300" fill="#2b2b3a" stroke="#5a5a6e" stroke-width="2"/>
+  <text x="100" y="140" font-size="56" text-anchor="middle" dominant-baseline="middle">🌌</text>
+  <text x="100" y="245" font-size="13" fill="#b8b8c8" text-anchor="middle" font-family="Georgia, serif">No cover</text>
+  <text x="100" y="263" font-size="13" fill="#b8b8c8" text-anchor="middle" font-family="Georgia, serif">available</text>
+</svg>

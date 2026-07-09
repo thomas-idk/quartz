@@ -6,6 +6,8 @@ tags:
 
 # On Liberty
 
+![[On Liberty - John Stuart Mill.jpg]]
+
 *Mill's case for the limits of the power society may rightfully hold over the individual.*
 
 **Author:** John Stuart Mill

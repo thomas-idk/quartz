@@ -6,6 +6,8 @@ tags:
 
 # Philosophical Works
 
+![[Philosophical Works - Descartes.jpg]]
+
 *Doubt everything until you hit something you can't — the Cogito, and what follows from it.*
 
 **Author:** René Descartes

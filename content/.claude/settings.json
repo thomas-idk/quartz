@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -sL \"https://covers.openlibrary.org/b/id/11898626-L.jpg\" -o \"/tmp/meditations_cover_final.jpg\" -w \"Status: %{http_code}, Size: %{size_download} bytes\\\\n\")",
+      "Read(//tmp/**)",
+      "Bash(mv \"/tmp/meditations_cover_final.jpg\" \"👋 hello/📕 Books/🖼️ covers/Meditations - Marcus Aurelius.jpg\")"
+    ]
+  }
+}
