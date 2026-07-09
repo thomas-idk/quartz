@@ -1,0 +1,14 @@
+---
+tags:
+  - book
+  - epistemology
+---
+
+# The Problems of Philosophy
+
+*Russell's short, clear introduction to what we can know and how we could possibly know it.*
+
+**Author:** Bertrand Russell
+**Format:** epub
+
+🔍 [[Books/The Problems of Philosophy - Bertrand Russell.epub|Open the book →]]
