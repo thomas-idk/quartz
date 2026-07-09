@@ -4,8 +4,8 @@
   "title": "Present and explain the concept of hinge propositi...",
   "titleGenerationStatus": "failed",
   "createdAt": 1783544880816,
-  "updatedAt": 1783550478597,
-  "lastResponseAt": 1783550478597,
+  "updatedAt": 1783555627063,
+  "lastResponseAt": 1783555627063,
   "sessionId": "7c74a30b-62ad-4395-a26c-27cba5b1f55c",
   "selectedModel": "haiku",
   "providerState": {
@@ -14,11 +14,11 @@
   "usage": {
     "model": "haiku",
     "inputTokens": 10,
-    "cacheCreationInputTokens": 1092,
-    "cacheReadInputTokens": 34779,
+    "cacheCreationInputTokens": 46373,
+    "cacheReadInputTokens": 21638,
     "contextWindow": 200000,
-    "contextTokens": 35881,
-    "percentage": 18,
+    "contextTokens": 68021,
+    "percentage": 34,
     "contextWindowIsAuthoritative": true
   }
 }
