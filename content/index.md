@@ -1,2 +1,9 @@
-hello :D i might send this to multiple people idk, but as it is right now only one person has the link to this, and thats nel, but im gonna start getting into writing, and the initial goal was just to simply write n share it, turns out i ended building a full ass project of storing and organizing notes, so have fun reading this, ill always try to keep in mind that there might be people reading so ill try to leave notes where i can to help :D
+# hey — you found it :)
 
+hello :D right now basically only nel has the link to this, but i figured i'd tidy it up a little anyway.
+
+it started as just wanting to write and share it. somewhere along the way it turned into a full-on project for storing and organizing the thoughts i keep coming back to — the ones that quietly hold everything else up — plus some poems i haven't finished.
+
+it's not really made for an audience. but if you're reading this, wander wherever you like — the sidebar has everything. i'll try to leave little notes along the way to help. :D
+
+*— thomas*
