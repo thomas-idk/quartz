@@ -1,4 +1,5 @@
 ---
+type: book
 tags:
   - book
   - metaphysics

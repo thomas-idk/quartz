@@ -1,3 +1,7 @@
+---
+type: original
+category: poetry
+---
 [[Hinge Propositions]] is like an abyss  
 if you'd jump down it, you would just fall endlessly  
 you'd just exist  

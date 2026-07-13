@@ -1,4 +1,5 @@
 ---
+type: original
 tags:
   - philosophy/epistemology
   - wittgenstein
