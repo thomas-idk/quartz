@@ -84,6 +84,84 @@ async function joinScripts(scripts: string[]): Promise<string> {
 function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentResources) {
   const cfg = ctx.cfg.configuration
 
+  // the abyss — animated black hole video background + cosmic click sound
+  componentResources.afterDOMLoaded.push(`
+    ;(function () {
+      if (window.__abyssInit) return
+      window.__abyssInit = true
+
+      function basePrefix() {
+        var el = document.querySelector('link[href$="index.css"]') || document.querySelector('script[src$="prescript.js"]')
+        var h = el ? (el.getAttribute("href") || el.getAttribute("src")) : "./"
+        return (h || "./").replace(/index\\.css$/, "").replace(/prescript\\.js$/, "")
+      }
+
+      function ensureBg() {
+        var dark = document.documentElement.getAttribute("saved-theme") === "dark"
+        var v = document.getElementById("abyss-video")
+        var o = document.getElementById("abyss-overlay")
+        if (dark) {
+          if (!o) {
+            o = document.createElement("div")
+            o.id = "abyss-overlay"
+            o.setAttribute("data-persist", "")
+            o.setAttribute("aria-hidden", "true")
+            document.body.prepend(o)
+          } else { o.style.display = "" }
+          if (!v) {
+            v = document.createElement("video")
+            v.id = "abyss-video"
+            v.src = basePrefix() + "static/blackhole.mp4"
+            v.autoplay = true; v.loop = true; v.muted = true; v.defaultMuted = true; v.playsInline = true
+            v.setAttribute("playsinline", ""); v.setAttribute("muted", "")
+            v.setAttribute("data-persist", ""); v.setAttribute("aria-hidden", "true"); v.setAttribute("tabindex", "-1")
+            document.body.prepend(v)
+            var pr = v.play(); if (pr && pr.catch) pr.catch(function () {})
+          } else { v.style.display = "" }
+        } else {
+          if (v) v.style.display = "none"
+          if (o) o.style.display = "none"
+        }
+      }
+
+      var mo = new MutationObserver(ensureBg)
+      mo.observe(document.documentElement, { attributes: true, attributeFilter: ["saved-theme"] })
+      document.addEventListener("nav", ensureBg)
+      if (document.readyState !== "loading") ensureBg()
+      else document.addEventListener("DOMContentLoaded", ensureBg)
+
+      // cosmic click sound (synthesized, plays on your click)
+      var actx = null
+      function ping() {
+        try {
+          if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)()
+          if (actx.state === "suspended") actx.resume()
+          var t = actx.currentTime
+          var master = actx.createGain(); master.connect(actx.destination)
+          master.gain.setValueAtTime(0.0001, t)
+          master.gain.exponentialRampToValueAtTime(0.12, t + 0.008)
+          master.gain.exponentialRampToValueAtTime(0.0001, t + 0.5)
+          var b = 500 + Math.random() * 70
+          ;[1, 2.01, 3.02].forEach(function (m, i) {
+            var osc = actx.createOscillator(); var g = actx.createGain()
+            osc.type = i === 0 ? "sine" : "triangle"; osc.frequency.value = b * m
+            g.gain.value = (i === 0 ? 0.6 : 0.16) / (i + 1)
+            osc.connect(g); g.connect(master); osc.start(t); osc.stop(t + 0.5)
+          })
+          var len = Math.floor(actx.sampleRate * 0.4)
+          var buf = actx.createBuffer(1, len, actx.sampleRate)
+          var dch = buf.getChannelData(0)
+          for (var n = 0; n < len; n++) dch[n] = (Math.random() * 2 - 1) * Math.pow(1 - n / len, 3)
+          var ns = actx.createBufferSource(); ns.buffer = buf
+          var bp = actx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 1600; bp.Q.value = 0.7
+          var ng = actx.createGain(); ng.gain.value = 0.045
+          ns.connect(bp); bp.connect(ng); ng.connect(master); ns.start(t)
+        } catch (e) {}
+      }
+      document.addEventListener("click", ping, true)
+    })()
+  `)
+
   // popovers
   if (cfg.enablePopovers) {
     componentResources.afterDOMLoaded.push(popoverScript)
