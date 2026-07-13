@@ -1,39 +1,64 @@
 @use "./variables.scss" as *;
 
 /* ============================================================
-   the abyss — a personal sanctuary
-   typography polish + animated black hole video background
+   the abyss — a premium personal sanctuary
    ============================================================ */
 
-/* ---- reading comfort ---- */
+/* ---------- base typography ---------- */
 article p,
 article li {
   line-height: 1.75;
 }
-
 h1, h2, h3, h4, h5 {
   letter-spacing: -0.015em;
 }
-
 a {
   text-underline-offset: 3px;
 }
-
-/* blockquotes — for the philosophy quotes & poetry */
 blockquote {
   border-left: 2px solid var(--secondary);
   font-style: italic;
   border-radius: 0 6px 6px 0;
 }
 
-/* ============================================================
-   animated black hole video background — dark mode only
-   (the <video> + overlay are injected site-wide by the build)
-   ============================================================ */
+/* ---------- left sidebar chrome ---------- */
+.page-title {
+  font-family: var(--headerFont);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+input.search-bar,
+.search input {
+  border-radius: 12px !important;
+}
+button.darkmode,
+button.readermode {
+  border: 1px solid var(--lightgray);
+  border-radius: 999px;
+  padding: 0.3rem 0.5rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+button.darkmode:hover,
+button.readermode:hover {
+  border-color: var(--secondary);
+}
+.explorer .folder-title {
+  font-weight: 500;
+}
+.explorer a.folder-button,
+.explorer .folder-title,
+.explorer li > a {
+  border-radius: 7px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.explorer li > a:hover,
+.explorer .folder-title:hover {
+  color: var(--secondary);
+}
+
+/* ---------- animated black hole video background (dark) ---------- */
 :root[saved-theme="dark"] {
-  body {
-    background: #04040a; /* fallback behind the video */
-  }
+  body { background: #04040a; }
 
   #abyss-video {
     position: fixed;
@@ -46,7 +71,6 @@ blockquote {
     pointer-events: none;
     opacity: 0.92;
   }
-
   #abyss-overlay {
     position: fixed;
     inset: 0;
@@ -54,12 +78,12 @@ blockquote {
     pointer-events: none;
     background:
       radial-gradient(120% 95% at 50% 28%,
-        rgba(4, 5, 12, 0.28) 0%,
-        rgba(4, 5, 12, 0.62) 50%,
+        rgba(4, 5, 12, 0.26) 0%,
+        rgba(4, 5, 12, 0.6) 50%,
         rgba(2, 2, 8, 0.9) 100%);
   }
 
-  /* keep reading text comfortable over the moving background */
+  /* reading panel for normal notes */
   .center > article {
     background: rgba(8, 9, 20, 0.5);
     -webkit-backdrop-filter: blur(3px);
@@ -68,4 +92,101 @@ blockquote {
     border-radius: 14px;
     padding: 1.5rem 1.8rem;
   }
+  /* homepage sits open over the void — no panel */
+  .center > article:has(.home) {
+    background: transparent;
+    border: 0;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    padding: 0;
+  }
+}
+
+/* ---------- homepage hero ---------- */
+.home {
+  max-width: 640px;
+}
+.home .eyebrow {
+  font-family: var(--codeFont), monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  color: var(--secondary);
+  opacity: 0.85;
+  margin: 0.3rem 0 1.1rem;
+}
+.home .home-title {
+  font-family: var(--headerFont);
+  font-weight: 300;
+  font-size: 3.1rem;
+  line-height: 1.03;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.1rem;
+  background: linear-gradient(180deg, var(--dark), var(--secondary) 135%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.home .lede {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--darkgray);
+  font-weight: 300;
+  margin: 0 0 1rem;
+}
+.home .lede2 {
+  font-style: italic;
+  color: var(--gray);
+  margin: 0 0 0.4rem;
+}
+
+/* ---------- entry cards ---------- */
+.entry-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 2rem;
+}
+.entry-card {
+  display: block;
+  padding: 1.1rem 1.15rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 14px;
+  text-decoration: none !important;
+  background-color: var(--light);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+:root[saved-theme="dark"] .entry-card {
+  background: rgba(12, 13, 26, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-color: rgba(150, 140, 205, 0.12);
+}
+.entry-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--secondary);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+}
+.entry-card .ec-ico {
+  display: block;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.entry-card .ec-t {
+  display: block;
+  font-family: var(--headerFont);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--dark);
+  margin-bottom: 0.2rem;
+}
+.entry-card .ec-d {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--gray);
+  line-height: 1.4;
+}
+
+@media (max-width: 800px) {
+  .entry-cards { grid-template-columns: 1fr; }
+  .home .home-title { font-size: 2.4rem; }
 }

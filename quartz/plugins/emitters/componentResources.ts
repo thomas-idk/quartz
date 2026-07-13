@@ -158,7 +158,10 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
           ns.connect(bp); bp.connect(ng); ng.connect(master); ns.start(t)
         } catch (e) {}
       }
-      document.addEventListener("click", ping, true)
+      document.addEventListener("click", function (e) {
+        var el = e.target && e.target.closest ? e.target.closest('a[href], button, [role="button"], input, select, textarea, summary, label, .entry-card') : null
+        if (el) ping()
+      }, true)
     })()
   `)
 

@@ -1,9 +1,18 @@
-# hey — you found it :)
+<div class="home">
 
-hello :D right now basically only nel has the link to this, but i figured i'd tidy it up a little anyway.
+<p class="eyebrow">NOTES FROM THE EDGE OF DOUBT</p>
 
-it started as just wanting to write and share it. somewhere along the way it turned into a full-on project for storing and organizing the thoughts i keep coming back to — the ones that quietly hold everything else up — plus some poems i haven't finished.
+<h1 class="home-title">hey — you found it :)</h1>
 
-it's not really made for an audience. but if you're reading this, wander wherever you like — the sidebar has everything. i'll try to leave little notes along the way to help. :D
+<p class="lede">hello :D right now basically only nel has the link to this, but i figured i'd tidy it up a little anyway. it started as just wanting to write and share — somewhere along the way it turned into a little archive of the thoughts i keep coming back to, the ones that quietly hold everything else up, plus some poems i haven't finished.</p>
 
-*— thomas*
+<p class="lede2">it's not really made for an audience. but if you're here, wander wherever you like. i'll leave little notes along the way. — thomas</p>
+
+<div class="entry-cards">
+  <a class="entry-card" href="/quartz/academics/🧠-philosophy/"><span class="ec-ico">🧠</span><span class="ec-t">Philosophy</span><span class="ec-d">epistemology, logic, the frame of thought</span></a>
+  <a class="entry-card" href="/quartz/academics/🧠-philosophy/🔍-epistemology/🔍-logic/🕳️-the-abyss/"><span class="ec-ico">🕳️</span><span class="ec-t">The Abyss</span><span class="ec-d">hinge propositions &amp; where reasons end</span></a>
+  <a class="entry-card" href="/quartz/🌙-poetry-i-guess/"><span class="ec-ico">🌙</span><span class="ec-t">Poetry i guess</span><span class="ec-d">unfinished things, kept anyway</span></a>
+  <a class="entry-card" href="/quartz/academics/📕-books/"><span class="ec-ico">📕</span><span class="ec-t">Library</span><span class="ec-d">the classics, read &amp; annotated</span></a>
+</div>
+
+</div>
