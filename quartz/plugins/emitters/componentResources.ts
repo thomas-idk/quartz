@@ -108,9 +108,8 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
           if (!o) {
             o = document.createElement("div")
             o.id = "abyss-overlay"
-            o.setAttribute("data-persist", "")
             o.setAttribute("aria-hidden", "true")
-            document.body.prepend(o)
+            document.documentElement.appendChild(o)
           } else { o.style.display = "" }
           if (!v) {
             v = document.createElement("video")
@@ -118,8 +117,8 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
             v.src = videoUrl()
             v.autoplay = true; v.loop = true; v.muted = true; v.defaultMuted = true; v.playsInline = true
             v.setAttribute("playsinline", ""); v.setAttribute("muted", "")
-            v.setAttribute("data-persist", ""); v.setAttribute("aria-hidden", "true"); v.setAttribute("tabindex", "-1")
-            document.body.prepend(v)
+            v.setAttribute("aria-hidden", "true"); v.setAttribute("tabindex", "-1")
+            document.documentElement.appendChild(v)
             var pr = v.play(); if (pr && pr.catch) pr.catch(function () {})
           } else { v.style.display = "" }
         } else {

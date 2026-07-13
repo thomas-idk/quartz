@@ -58,7 +58,8 @@ button.readermode:hover {
 
 /* ---------- animated black hole video background (dark) ---------- */
 :root[saved-theme="dark"] {
-  body { background: #04040a; }
+  background: #04040a; /* on <html>, behind the video */
+  body { background: transparent; }
 
   #abyss-video {
     position: fixed;
