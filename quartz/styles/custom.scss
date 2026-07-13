@@ -103,6 +103,11 @@ button.readermode:hover {
 }
 
 /* ---------- homepage hero ---------- */
+/* hide the auto "index / date / read-time" header + divider on the homepage */
+.center:has(.home) > .page-header,
+.center:has(.home) > hr {
+  display: none;
+}
 .home {
   max-width: 640px;
 }
