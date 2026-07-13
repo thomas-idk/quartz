@@ -110,6 +110,7 @@ button.readermode:hover {
 }
 .home {
   max-width: 640px;
+  padding-top: clamp(3rem, 13vh, 11rem);
 }
 .home .eyebrow {
   font-family: var(--codeFont), monospace;
