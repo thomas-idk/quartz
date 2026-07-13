@@ -71,16 +71,26 @@ button.readermode:hover {
     pointer-events: none;
     opacity: 0.92;
   }
+  /* reading pages — the void dips a touch so text stays easy */
   #abyss-overlay {
     position: fixed;
     inset: 0;
     z-index: -1;
     pointer-events: none;
+    transition: background 0.7s ease;
     background:
-      radial-gradient(120% 95% at 50% 28%,
-        rgba(4, 5, 12, 0.26) 0%,
-        rgba(4, 5, 12, 0.6) 50%,
-        rgba(2, 2, 8, 0.9) 100%);
+      radial-gradient(120% 95% at 50% 30%,
+        rgba(4, 5, 12, 0.36) 0%,
+        rgba(4, 5, 12, 0.64) 52%,
+        rgba(2, 2, 8, 0.92) 100%);
+  }
+  /* homepage — the black hole in full glory */
+  &:has(.home) #abyss-overlay {
+    background:
+      radial-gradient(120% 95% at 50% 30%,
+        rgba(4, 5, 12, 0.08) 0%,
+        rgba(4, 5, 12, 0.38) 55%,
+        rgba(2, 2, 8, 0.8) 100%);
   }
 
   /* reading panel for normal notes */
@@ -143,6 +153,14 @@ button.readermode:hover {
   font-style: italic;
   color: var(--gray);
   margin: 0 0 0.4rem;
+}
+/* keep the hero crisp over the brighter homepage video */
+:root[saved-theme="dark"] .home .home-title {
+  filter: drop-shadow(0 3px 22px rgba(0, 0, 0, 0.55));
+}
+:root[saved-theme="dark"] .home .lede,
+:root[saved-theme="dark"] .home .lede2 {
+  text-shadow: 0 1px 14px rgba(2, 3, 10, 0.75);
 }
 
 /* ---------- entry cards ---------- */
