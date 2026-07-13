@@ -90,10 +90,14 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
       if (window.__abyssInit) return
       window.__abyssInit = true
 
-      function basePrefix() {
-        var el = document.querySelector('link[href$="index.css"]') || document.querySelector('script[src$="prescript.js"]')
-        var h = el ? (el.getAttribute("href") || el.getAttribute("src")) : "./"
-        return (h || "./").replace(/index\\.css$/, "").replace(/prescript\\.js$/, "")
+      function videoUrl() {
+        var el = document.querySelector('link[href*="static/"], script[src*="static/"]')
+        if (el) {
+          var abs = el.href || el.src
+          var i = abs.indexOf("static/")
+          if (i >= 0) return abs.slice(0, i) + "static/blackhole.mp4"
+        }
+        return new URL("static/blackhole.mp4", document.baseURI).href
       }
 
       function ensureBg() {
@@ -111,7 +115,7 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
           if (!v) {
             v = document.createElement("video")
             v.id = "abyss-video"
-            v.src = basePrefix() + "static/blackhole.mp4"
+            v.src = videoUrl()
             v.autoplay = true; v.loop = true; v.muted = true; v.defaultMuted = true; v.playsInline = true
             v.setAttribute("playsinline", ""); v.setAttribute("muted", "")
             v.setAttribute("data-persist", ""); v.setAttribute("aria-hidden", "true"); v.setAttribute("tabindex", "-1")
