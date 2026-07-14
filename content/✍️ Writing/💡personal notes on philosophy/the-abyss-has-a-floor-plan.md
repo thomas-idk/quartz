@@ -212,7 +212,9 @@ The Tower, built up from the hinges — **upward: certainty thins, content thick
 - **The risk:** this is the tower's most load-bearing joint — if "agency commits you to norms" fails, T4 loses its bridge. The attack is called *shmagency* (Obstacle №2).
 
 > [!quote] On Certainty §204
-> "It is our acting which lies at the bottom of the language-game." — The bottom is already practical. That is the whole trick of T2.
+> "It is our acting which lies at the bottom of the language-game." 
+
+%% The bottom is already practical. That is the whole trick of T2. %%
 
 > [!info]- Notes & scholarship
 > T2 is where your framework departs from pure Wittgenstein exegesis and starts building — flag that honestly. *On Certainty* itself stays epistemological; but its deepest remark (204: acting at the bottom) points here: if the bottom of the language-game is *action*, then the bottom is already norm-laden, because action (unlike mere movement) is done under descriptions, aimed, correctable, criticizable. A twitch cannot be done *wrong*; an act can. That grammatical fact — acts are the kind of thing that can misfire — is the seed of normativity, and it is found (T2), not built.
