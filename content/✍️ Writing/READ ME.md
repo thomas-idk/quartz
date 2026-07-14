@@ -8,7 +8,7 @@ aliases:
 
 # ✍️ Writing
 
-Everything here is mine — written by me, not gathered from anyone else. The books live over in the [[Published/Academics/📕 Books/READ ME|📚 Library]]; this is the other half: the thoughts I keep circling back to, and some poems I haven't finished.
+Everything here is mine — written by me, not gathered from anyone else. (though i do use ai alot to like phrase things lol) The books live over in the [[Published/Academics/📕 Books/READ ME|📚 Library]]; this is the other half: the thoughts I keep circling back to, and some poems I haven't finished.
 
 > [!note] How this is organised
 > Every note in this folder carries `type: original` in its frontmatter. To pull up *all* of my writing anywhere in the vault, search `["type":"original"]` — even things that haven't been added to the lists below yet.
