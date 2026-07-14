@@ -70,7 +70,23 @@ button.readermode:hover {
     object-position: center 40%;
     z-index: -2;
     pointer-events: none;
-    opacity: 0.92;
+    /* invisible until it's actually playing — phones that block autoplay
+       see the clean dark backdrop instead of a frozen frame + resume button */
+    opacity: 0;
+    transition: opacity 0.8s ease;
+
+    &.is-playing {
+      opacity: 0.92;
+    }
+  }
+  /* belt & suspenders: never show native video chrome (mobile play/resume button) */
+  #abyss-video::-webkit-media-controls,
+  #abyss-video::-webkit-media-controls-start-playback-button,
+  #abyss-video::-webkit-media-controls-overlay-play-button,
+  #abyss-video::-webkit-media-controls-panel {
+    display: none !important;
+    -webkit-appearance: none;
+    opacity: 0 !important;
   }
   /* reading pages — the void dips a touch so text stays easy */
   #abyss-overlay {
@@ -170,6 +186,10 @@ button.readermode:hover {
   grid-template-columns: 1fr 1fr;
   gap: 14px;
   margin-top: 2rem;
+}
+/* three cards: poetry + philosophy up top, academics full-width beneath */
+.entry-card-wide {
+  grid-column: 1 / -1;
 }
 .entry-card {
   display: block;

@@ -100,6 +100,30 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
         return new URL("static/blackhole.mp4", document.baseURI).href
       }
 
+      function tryPlay(v) {
+        if (!v) return
+        v.muted = true
+        var pr = v.play()
+        if (pr && pr.catch) pr.catch(function () {})
+      }
+
+      // phones (iOS low power mode, android data saver) often reject the first
+      // play() — retry silently on the first tap/scroll/keypress and whenever
+      // the tab becomes visible again, instead of showing a paused video
+      function armAutoplayRescue(v) {
+        if (v.__abyssArmed) return
+        v.__abyssArmed = true
+        function kick() {
+          if (document.documentElement.getAttribute("saved-theme") === "dark" && v.paused) tryPlay(v)
+        }
+        ;["pointerdown", "touchend", "click", "keydown", "scroll"].forEach(function (t) {
+          window.addEventListener(t, kick, { passive: true })
+        })
+        document.addEventListener("visibilitychange", function () {
+          if (!document.hidden) kick()
+        })
+      }
+
       function ensureBg() {
         var dark = document.documentElement.getAttribute("saved-theme") === "dark"
         var v = document.getElementById("abyss-video")
@@ -114,13 +138,27 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
           if (!v) {
             v = document.createElement("video")
             v.id = "abyss-video"
-            v.src = videoUrl()
-            v.autoplay = true; v.loop = true; v.muted = true; v.defaultMuted = true; v.playsInline = true
-            v.setAttribute("playsinline", ""); v.setAttribute("muted", "")
+            // every autoplay hint goes on BEFORE the src so mobile browsers
+            // classify it as a silent background video from the start
+            v.muted = true; v.defaultMuted = true
+            v.autoplay = true; v.loop = true; v.playsInline = true
+            v.preload = "auto"
+            v.setAttribute("muted", ""); v.setAttribute("autoplay", ""); v.setAttribute("loop", "")
+            v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "")
+            v.setAttribute("disablepictureinpicture", ""); v.setAttribute("disableremoteplayback", "")
             v.setAttribute("aria-hidden", "true"); v.setAttribute("tabindex", "-1")
+            // only fade in once frames are actually rendering — a blocked
+            // autoplay shows the clean dark backdrop, never a resume button
+            v.addEventListener("playing", function () { v.classList.add("is-playing") })
+            v.addEventListener("pause", function () { v.classList.remove("is-playing") })
+            v.src = videoUrl()
             document.documentElement.appendChild(v)
-            var pr = v.play(); if (pr && pr.catch) pr.catch(function () {})
-          } else { v.style.display = "" }
+            tryPlay(v)
+            armAutoplayRescue(v)
+          } else {
+            v.style.display = ""
+            if (v.paused) tryPlay(v)
+          }
         } else {
           if (v) v.style.display = "none"
           if (o) o.style.display = "none"

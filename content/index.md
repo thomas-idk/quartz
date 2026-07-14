@@ -7,11 +7,9 @@
 <p class="lede2">it's not really made for an audience. but if you're here, wander wherever you like. i'll leave little notes along the way. — thomas</p>
 
 <div class="entry-cards">
-  <a class="entry-card" href="/academics/🧠-philosophy/"><span class="ec-ico">🧠</span><span class="ec-t">Philosophy</span><span class="ec-d">epistemology, logic, the frame of thought</span></a>
-  <a class="entry-card" href="/✍️-writing/"><span class="ec-ico">✍️</span><span class="ec-t">Writing</span><span class="ec-d">what i actually wrote — the thoughts i keep circling</span></a>
-  <a class="entry-card" href="/✍️-writing/🧠-philosophy/"><span class="ec-ico">🕳️</span><span class="ec-t">The Abyss</span><span class="ec-d">hinge propositions &amp; where reasons end</span></a>
-  <a class="entry-card" href="/✍️-writing/🌙-poetry/"><span class="ec-ico">🌙</span><span class="ec-t">Poetry i guess</span><span class="ec-d">unfinished things, kept anyway</span></a>
-  <a class="entry-card" href="/academics/📕-books/"><span class="ec-ico">📕</span><span class="ec-t">Library</span><span class="ec-d">the classics, read &amp; annotated</span></a>
+  <a class="entry-card" href="/✍️-writing/🌙-poetry/"><span class="ec-ico">🌙</span><span class="ec-t">Poetry</span><span class="ec-d">unfinished things, kept anyway</span></a>
+  <a class="entry-card" href="/✍️-writing/💡personal-notes-on-philosophy/"><span class="ec-ico">💡</span><span class="ec-t">Personal Notes on Philosophy</span><span class="ec-d">hinge propositions &amp; where reasons end</span></a>
+  <a class="entry-card entry-card-wide" href="/academics/"><span class="ec-ico">🎓</span><span class="ec-t">Academics</span><span class="ec-d">philosophy, literature, science — the library, read &amp; annotated</span></a>
 </div>
 
 </div>
