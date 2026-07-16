@@ -1,5 +1,5 @@
 Alex o'connor in "Debating Morality With Philosophical Legends", where he debated the likes of Peter Singer and other 'legends'. Full video: https://www.youtube.com/watch?v=rI1OevN2FDI
-![](https://www.youtube.com/watch?v=rI1OevN2FDI)
+![[reflective-equilibrium-clip.mp4]]
 
 ---
 
@@ -37,4 +37,4 @@ Alex o'connor in "Debating Morality With Philosophical Legends", where he debate
 
 > [!note] Housekeeping
 > - **John Rawls**, who popularized reflective equilibrium in *A Theory of Justice* (1971).
-> - These notes were reconstructed from the clip's on-screen subtitles (the source `.mp4` was a temporary screen-recording and is no longer in the vault, so the embed above may show as a broken link).
+> - These notes were reconstructed from the clip's on-screen subtitles. The clip corresponds to 20:38–21:47 of the full talk.
