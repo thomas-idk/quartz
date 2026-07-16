@@ -1,5 +1,5 @@
 Alex o'connor in "Debating Morality With Philosophical Legends", where he debated the likes of Peter Singer and other 'legends'. Full video: https://www.youtube.com/watch?v=rI1OevN2FDI
-![[2026-07-16 16-41-04.mp4]]
+![](https://www.youtube.com/watch?v=rI1OevN2FDI)
 
 ---
 
