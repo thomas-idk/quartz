@@ -1,3 +1,12 @@
+---
+type: original
+tags:
+  - political-philosophy
+  - international-relations
+aliases:
+  - Anarchy Adjudicated
+---
+
 # Anarchy Adjudicated: Realism, Liberalism, and the Point Where the Facts Run Out
 
 ## Abstract
