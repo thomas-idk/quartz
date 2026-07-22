@@ -213,8 +213,10 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
       if (document.readyState !== "loading") ensureBg()
       else document.addEventListener("DOMContentLoaded", ensureBg)
 
-      // cosmic click sound (synthesized, plays on your click)
+      // "bam" — a deep, punchy portal hit (Web Audio, synthesized), on click.
+      // No echo. Tune QG_CLICK_VOL to taste (0 = silent).
       var actx = null
+      var QG_CLICK_VOL = 0.3
       function ping() {
         try {
           if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)()
@@ -222,27 +224,31 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
           var t = actx.currentTime
           var master = actx.createGain(); master.connect(actx.destination)
           master.gain.setValueAtTime(0.0001, t)
-          master.gain.exponentialRampToValueAtTime(0.12, t + 0.008)
-          master.gain.exponentialRampToValueAtTime(0.0001, t + 0.5)
-          var b = 500 + Math.random() * 70
-          ;[1, 2.01, 3.02].forEach(function (m, i) {
-            var osc = actx.createOscillator(); var g = actx.createGain()
-            osc.type = i === 0 ? "sine" : "triangle"; osc.frequency.value = b * m
-            g.gain.value = (i === 0 ? 0.6 : 0.16) / (i + 1)
-            osc.connect(g); g.connect(master); osc.start(t); osc.stop(t + 0.5)
-          })
-          var len = Math.floor(actx.sampleRate * 0.4)
+          master.gain.exponentialRampToValueAtTime(QG_CLICK_VOL, t + 0.006)
+          master.gain.exponentialRampToValueAtTime(0.0001, t + 0.28)
+          function tone(type, f, to, tf, g, dur) {
+            var osc = actx.createOscillator(); var og = actx.createGain()
+            osc.type = type; osc.frequency.setValueAtTime(f, t)
+            if (to) osc.frequency.exponentialRampToValueAtTime(to, t + tf)
+            og.gain.value = g; osc.connect(og); og.connect(master); osc.start(t); osc.stop(t + dur)
+          }
+          tone("sine", 212, 158, 0.055, 0.95, 0.3)   // fundamental with the downward "b-am" punch
+          tone("sine", 95, 0, 0, 0.5, 0.24)           // sub weight
+          tone("triangle", 320, 0, 0, 0.14, 0.16)     // a little upper body
+          // short filtered-noise transient for the attack
+          var len = Math.floor(actx.sampleRate * 0.02)
           var buf = actx.createBuffer(1, len, actx.sampleRate)
           var dch = buf.getChannelData(0)
-          for (var n = 0; n < len; n++) dch[n] = (Math.random() * 2 - 1) * Math.pow(1 - n / len, 3)
+          for (var n = 0; n < len; n++) dch[n] = (Math.random() * 2 - 1) * Math.pow(1 - n / len, 4)
           var ns = actx.createBufferSource(); ns.buffer = buf
-          var bp = actx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 1600; bp.Q.value = 0.7
-          var ng = actx.createGain(); ng.gain.value = 0.045
-          ns.connect(bp); bp.connect(ng); ng.connect(master); ns.start(t)
+          var lp = actx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2200
+          var ng = actx.createGain(); ng.gain.value = 0.25
+          ns.connect(lp); lp.connect(ng); ng.connect(master); ns.start(t)
         } catch (e) {}
       }
+      // fires on links / buttons / cards / toggles — NOT text fields, so typing stays quiet
       document.addEventListener("click", function (e) {
-        var el = e.target && e.target.closest ? e.target.closest('a[href], button, [role="button"], input, select, textarea, summary, label, .entry-card') : null
+        var el = e.target && e.target.closest ? e.target.closest('a[href], button, [role="button"], summary') : null
         if (el) ping()
       }, true)
     })()
