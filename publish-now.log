@@ -1,1 +1,15 @@
 === publish-now start ===
+warning: in the working copy of '.github/workflows/deploy.yml', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'publish-now.log', CRLF will be replaced by LF the next time Git touches it
+[main 1108d0b] Quiet Garden theme reskin
+ 12 files changed, 1036 insertions(+), 215 deletions(-)
+ create mode 100644 publish-now.bat
+ create mode 100644 publish-now.log
+ create mode 100644 quartz/components/BackButton.tsx
+ create mode 100644 quartz/components/BrandOrb.tsx
+ create mode 100644 quartz/components/HomeIndex.tsx
+ create mode 100644 quartz/components/frames/QuietGarden.tsx
+To https://github.com/thomas-idk/quartz.git
+   03a6cfd..1108d0b  main -> main
+=== push exit code: 0 ===     
+1108d0baeb074daa13f4c47d6274164e85ffba1e
