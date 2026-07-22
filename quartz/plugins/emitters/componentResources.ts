@@ -198,8 +198,13 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
         }
         var dark = document.getElementById("abyss-video")
         var day = document.getElementById("daylight-video")
+        // honour reduced-motion: no moving video, just the static overlay + bg colour
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          hide(dark); hide(day)
+          return
+        }
         if (light) {
-          if (!day) day = makeVideo("daylight-video", "daylight.mp4")
+          if (!day) day = makeVideo("daylight-video", "clouds.mp4")
           show(day); hide(dark)
         } else {
           if (!dark) dark = makeVideo("abyss-video", "blackhole.mp4")

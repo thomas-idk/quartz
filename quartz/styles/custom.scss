@@ -821,3 +821,152 @@ footer {
   .qg-recents { width: 100%; }
   .home .home-title { font-size: 2.4rem; }
 }
+
+/* ============================================================
+   ambient toggle · progress · copy · lightbox · callouts · code
+   ============================================================ */
+:root { --qg-cyan: #7fd3ff; --qg-green: #7bdca0; --qg-amber: #e0a86a; --qg-red: #f08a8a; --qg-purple: #c4a0ff; }
+
+/* ambient mute toggle (top bar) */
+.qg-tools .qg-ambient {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  margin: 0;
+  color: var(--qg-pill-ink);
+  background: var(--qg-pill-bg);
+  border: 1px solid var(--qg-pill-border);
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  & .qg-ambient-icon { width: 16px; height: 16px; display: block; }
+  & .qg-wave { opacity: 0; transition: opacity 0.25s; }
+  & .qg-mute { opacity: 0.85; transition: opacity 0.2s; }
+  &:hover { background: var(--qg-pill-h-bg); border-color: var(--qg-pill-h-border); color: var(--qg-pill-h-ink); }
+  &.is-on {
+    color: var(--qg-accent);
+    border-color: var(--qg-card-hover-border);
+    & .qg-wave { opacity: 1; }
+    & .qg-wave2 { animation: qgWave 2.4s ease-in-out infinite; }
+    & .qg-mute { opacity: 0; }
+  }
+}
+@keyframes qgWave { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+/* reading progress bar (notes) */
+#qg-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--qg-accent), var(--qg-accent-hi));
+  box-shadow: 0 0 8px var(--qg-accent);
+  transition: opacity 0.3s ease;
+}
+
+/* soft cross-fade on SPA navigation */
+@keyframes qgNavIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.qg-content-col.qg-navin { animation: qgNavIn 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+/* code blocks + inline code */
+.qg-note article pre,
+.qg-folder .qg-content-col pre,
+.qg-tag .qg-content-col pre {
+  position: relative;
+  background: var(--qg-glass-2);
+  border: 1px solid var(--qg-glass-border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  overflow: auto;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  & code { background: none; font-family: var(--codeFont), ui-monospace, monospace; font-size: 13.5px; }
+}
+.qg-note article :not(pre) > code {
+  font-family: var(--codeFont), ui-monospace, monospace;
+  font-size: 0.9em;
+  color: var(--qg-accent-hi);
+  background: var(--qg-tag-bg);
+  border: 1px solid var(--qg-tag-border);
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+.qg-copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font: 500 11px #{$ui};
+  letter-spacing: 0.02em;
+  color: var(--qg-pill-ink);
+  background: var(--qg-pill-bg);
+  border: 1px solid var(--qg-pill-border);
+  border-radius: 7px;
+  padding: 3px 9px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s, color 0.2s;
+}
+pre:hover .qg-copy, .qg-copy:focus { opacity: 1; }
+.qg-copy:hover { background: var(--qg-pill-h-bg); color: var(--qg-pill-h-ink); }
+
+/* figures / images / lightbox */
+.qg-content-col img { cursor: zoom-in; border-radius: 12px; max-width: 100%; height: auto; }
+.qg-note article figure { margin: 24px 0; }
+.qg-note article figcaption { font-size: 13px; color: var(--qg-dim); text-align: center; margin-top: 8px; font-style: italic; }
+#qg-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  cursor: zoom-out;
+  background: rgba(4, 5, 10, 0.82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  & img { max-width: 92vw; max-height: 88vh; border-radius: 12px; box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6); transform: scale(0.96); transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  &.open { opacity: 1; }
+  &.open img { transform: scale(1); }
+}
+
+/* Obsidian callouts — glass panels with a per-type accent */
+.callout {
+  margin: 22px 0;
+  border-radius: 12px;
+  border: 1px solid var(--qg-glass-border);
+  border-left: 3px solid var(--qg-accent);
+  background: var(--qg-glass-2);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  padding: 2px 16px;
+  overflow: hidden;
+  & .callout-title { display: flex; align-items: center; gap: 8px; padding: 11px 0 6px; font-family: var(--headerFont); font-weight: 600; color: var(--qg-title); }
+  & .callout-icon, & .callout-icon svg { flex: none; width: 16px; height: 16px; color: var(--qg-accent); fill: currentColor; }
+  & .callout-content { color: var(--qg-body); padding-bottom: 8px; }
+  & .callout-content > *:first-child { margin-top: 0; }
+  & a { color: var(--qg-accent); }
+}
+.callout[data-callout="tip"], .callout[data-callout="hint"], .callout[data-callout="success"], .callout[data-callout="check"], .callout[data-callout="done"] { border-left-color: var(--qg-green); & .callout-icon, & .callout-icon svg { color: var(--qg-green); } }
+.callout[data-callout="warning"], .callout[data-callout="caution"], .callout[data-callout="attention"] { border-left-color: var(--qg-amber); & .callout-icon, & .callout-icon svg { color: var(--qg-amber); } }
+.callout[data-callout="danger"], .callout[data-callout="error"], .callout[data-callout="failure"], .callout[data-callout="bug"] { border-left-color: var(--qg-red); & .callout-icon, & .callout-icon svg { color: var(--qg-red); } }
+.callout[data-callout="question"], .callout[data-callout="faq"], .callout[data-callout="info"], .callout[data-callout="todo"] { border-left-color: var(--qg-cyan); & .callout-icon, & .callout-icon svg { color: var(--qg-cyan); } }
+.callout[data-callout="quote"], .callout[data-callout="cite"], .callout[data-callout="abstract"], .callout[data-callout="summary"] { border-left-color: var(--qg-purple); & .callout-icon, & .callout-icon svg { color: var(--qg-purple); } }
+
+/* reduced motion — calm everything */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  .qg-orb { animation: none !important; }
+  #abyss-video, #daylight-video { display: none !important; }
+}

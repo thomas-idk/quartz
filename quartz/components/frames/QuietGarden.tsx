@@ -2,10 +2,12 @@ import { PageFrame, PageFrameProps } from "./types"
 import BrandOrbConstructor from "../BrandOrb"
 import BackButtonConstructor from "../BackButton"
 import HomeIndexConstructor from "../HomeIndex"
+import AmbientToggleConstructor from "../AmbientToggle"
 
 const BrandOrb = BrandOrbConstructor()
 const BackButton = BackButtonConstructor()
 const HomeIndex = HomeIndexConstructor()
+const AmbientToggle = AmbientToggleConstructor()
 
 /**
  * The Quiet Garden page frame.
@@ -49,6 +51,7 @@ export const QuietGardenFrame: PageFrame = {
               {left.map((BarComponent) => (
                 <BarComponent {...componentData} />
               ))}
+              <AmbientToggle {...componentData} />
             </div>
           </div>
         </header>
