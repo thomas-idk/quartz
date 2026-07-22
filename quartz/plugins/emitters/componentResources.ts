@@ -84,6 +84,12 @@ async function joinScripts(scripts: string[]): Promise<string> {
 function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentResources) {
   const cfg = ctx.cfg.configuration
 
+  // the quiet garden is dark-only: force the dark theme before first paint so
+  // the blackhole video always shows and there's never a light-mode flash.
+  componentResources.beforeDOMLoaded.push(`
+    document.documentElement.setAttribute("saved-theme", "dark")
+  `)
+
   // the abyss — animated black hole video background + cosmic click sound
   componentResources.afterDOMLoaded.push(`
     ;(function () {

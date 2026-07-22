@@ -16,8 +16,8 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Fraunces
-      body: Spectral
+      header: Newsreader
+      body: Newsreader
       code: IBM Plex Mono
     colors:
       lightMode:
@@ -31,15 +31,15 @@ configuration:
         highlight: rgba(180, 150, 90, 0.12)
         textHighlight: "#e8c46b88"
       darkMode:
-        light: "#07060e"
-        lightgray: "#231f30"
-        gray: "#6f6a86"
-        darkgray: "#d7d3e6"
-        dark: "#f2eeff"
-        secondary: "#e0a86a"
-        tertiary: "#9b7bff"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#b3aa0288"
+        light: "#07080c"
+        lightgray: "#20232e"
+        gray: "#8b91a6"
+        darkgray: "#c8ccda"
+        dark: "#f3f4f9"
+        secondary: "#9db4ff"
+        tertiary: "#c7d3ff"
+        highlight: rgba(157, 180, 255, 0.10)
+        textHighlight: "#9db4ff55"
 plugins:
   - source: github:quartz-community/created-modified-date
     enabled: true
@@ -153,7 +153,7 @@ plugins:
   - source: github:quartz-community/tag-page
     enabled: true
   - source: github:quartz-community/explorer
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 50
@@ -173,7 +173,7 @@ plugins:
   - source: github:quartz-community/backlinks
     enabled: true
     layout:
-      position: right
+      position: afterBody
       priority: 50
   - source: github:quartz-community/article-title
     enabled: true
@@ -191,18 +191,18 @@ plugins:
       position: beforeBody
       priority: 30
   - source: github:quartz-community/page-title
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 10
   - source: github:quartz-community/darkmode
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 30
       group: toolbar
   - source: github:quartz-community/reader-mode
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 35
@@ -277,17 +277,21 @@ layout:
       gap: 0.5rem
   byPageType:
     "404":
+      template: quiet-garden
       positions:
         beforeBody: []
         left: []
         right: []
-    content: {}
+    content:
+      template: quiet-garden
     folder:
+      template: quiet-garden
       exclude:
         - reader-mode
       positions:
         right: []
     tag:
+      template: quiet-garden
       exclude:
         - reader-mode
       positions:
