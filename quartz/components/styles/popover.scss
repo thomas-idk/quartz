@@ -1,17 +1,20 @@
 @use "../../styles/variables.scss" as *;
 
-@keyframes dropin {
-  0% {
-    opacity: 0;
-    visibility: hidden;
-  }
-  1% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-    visibility: visible;
-  }
+/* ============================================================
+   the quiet garden — hover link preview (popover)
+   Elegant frosted glass, a glowing top accent, and a cinematic
+   entrance. The OUTER .popover is positioned by JS via transform,
+   so it only fades; the INNER card does the drift + scale.
+   ============================================================ */
+
+@keyframes qgPopoverFade {
+  0%   { opacity: 0; visibility: hidden; }
+  1%   { opacity: 0; visibility: visible; }
+  100% { opacity: 1; visibility: visible; }
+}
+@keyframes qgPopoverRise {
+  from { transform: translateY(12px) scale(0.965); }
+  to   { transform: translateY(0) scale(1); }
 }
 
 .popover {
@@ -22,59 +25,80 @@
   left: 0;
   top: 0;
   will-change: transform;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 
   & > .popover-inner {
     position: relative;
     width: 30rem;
     max-height: 20rem;
-    padding: 0 1rem 1rem 1rem;
+    padding: 1.15rem 1.35rem 1.3rem;
+    font-family: var(--bodyFont);
     font-weight: initial;
     font-style: initial;
     line-height: normal;
     font-size: initial;
-    font-family: var(--bodyFont);
-    border: 1px solid var(--lightgray);
-    background-color: var(--light);
-    border-radius: 5px;
-    box-shadow: 6px 6px 36px 0 rgba(0, 0, 0, 0.25);
+    color: var(--qg-body, var(--darkgray));
+    border: 1px solid var(--qg-modal-border, var(--lightgray));
+    border-radius: 14px;
+    /* frosted glass + a glowing accent hairline along the very top edge */
+    background:
+      linear-gradient(90deg, transparent 6%, var(--qg-accent) 50%, transparent 94%) top center / 100% 2px no-repeat,
+      var(--qg-modal-bg, var(--light));
+    -webkit-backdrop-filter: blur(16px) saturate(1.15);
+    backdrop-filter: blur(16px) saturate(1.15);
+    box-shadow:
+      0 24px 60px -20px rgba(8, 10, 20, 0.55),
+      0 0 26px -14px var(--qg-accent);
     overflow: auto;
     overscroll-behavior: contain;
     white-space: normal;
     user-select: none;
     cursor: default;
+
+    /* thin, themed scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--qg-accent) 38%, transparent) transparent;
+    &::-webkit-scrollbar { width: 8px; }
+    &::-webkit-scrollbar-thumb {
+      background: color-mix(in srgb, var(--qg-accent) 38%, transparent);
+      border-radius: 8px;
+      border: 2px solid transparent;
+      background-clip: content-box;
+    }
+
+    /* preview content typography */
+    & .breadcrumb-container { display: none; } /* redundant in a hover preview */
+    & h1,
+    & .article-title {
+      font-family: var(--headerFont);
+      font-weight: 500;
+      font-size: 1.4rem;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--qg-title, var(--dark));
+      margin: 0.1rem 0 0.4rem;
+    }
+    & h2, & h3 { font-family: var(--headerFont); color: var(--qg-h, var(--dark)); }
+    & .content-meta { font-size: 12px; color: var(--qg-meta, var(--gray)); margin: 0 0 0.7rem; }
+    & p, & li { font-family: var(--bodyFont); color: var(--qg-body, var(--darkgray)); font-size: 15px; line-height: 1.62; }
+    & a { color: var(--qg-accent); }
+    & mark, & .highlight { background: var(--qg-tag-bg); color: inherit; border-radius: 4px; padding: 0 2px; }
   }
 
+  /* image / pdf previews stay edge-to-edge inside the rounded card */
   & > .popover-inner[data-content-type] {
     &[data-content-type*="pdf"],
     &[data-content-type*="image"] {
       padding: 0;
       max-height: 100%;
+      overflow: hidden;
+      background: var(--qg-modal-bg, var(--light));
     }
-
-    &[data-content-type*="image"] {
-      img {
-        margin: 0;
-        border-radius: 0;
-        display: block;
-      }
-    }
-
-    &[data-content-type*="pdf"] {
-      iframe {
-        width: 100%;
-      }
-    }
+    &[data-content-type*="image"] img { margin: 0; border-radius: 14px; display: block; }
+    &[data-content-type*="pdf"] iframe { width: 100%; }
   }
-
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  visibility: hidden;
-  opacity: 0;
-  transition:
-    opacity 0.3s ease,
-    visibility 0.3s ease;
 
   @media all and ($mobile) {
     display: none !important;
@@ -83,7 +107,11 @@
 
 .active-popover,
 .popover:hover {
-  animation: dropin 0.3s ease;
-  animation-fill-mode: forwards;
-  animation-delay: 0.2s;
+  animation: qgPopoverFade 0.3s ease forwards;
+  animation-delay: 0.15s;
+}
+.active-popover > .popover-inner,
+.popover:hover > .popover-inner {
+  transform-origin: center top;
+  animation: qgPopoverRise 0.36s cubic-bezier(0.16, 0.9, 0.24, 1) 0.15s both;
 }
