@@ -13,23 +13,8 @@ const BackButton: QuartzComponent = () => {
   )
 }
 
-BackButton.afterDOMLoaded = `
-;(function () {
-  function update() {
-    var btn = document.querySelector('[data-qg-back]')
-    if (!btn) return
-    if (!btn.__qgWired) {
-      btn.__qgWired = true
-      btn.addEventListener('click', function () {
-        if (window.history.length > 1) window.history.back()
-      })
-    }
-    btn.style.visibility = window.history.length > 1 ? 'visible' : 'hidden'
-  }
-  document.addEventListener('nav', update)
-  if (document.readyState !== 'loading') update()
-  else document.addEventListener('DOMContentLoaded', update)
-})()
-`
+// Click wiring + visibility live in a global, delegation-based script in
+// quartz/plugins/emitters/componentResources.ts, because bespoke frame
+// components don't have their afterDOMLoaded scripts collected by the build.
 
 export default (() => BackButton) satisfies QuartzComponentConstructor

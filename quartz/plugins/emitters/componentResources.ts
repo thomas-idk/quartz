@@ -90,6 +90,26 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
     document.documentElement.setAttribute("saved-theme", "dark")
   `)
 
+  // wire the top-bar "← Back" button. It's a bespoke frame component, so its
+  // own afterDOMLoaded script isn't collected — handle it globally (delegated,
+  // so it survives SPA re-renders) and hide it when there's no history to pop.
+  componentResources.afterDOMLoaded.push(`
+    ;(function () {
+      function canBack() { return window.history.length > 1 }
+      document.addEventListener("click", function (e) {
+        var b = e.target && e.target.closest ? e.target.closest("[data-qg-back]") : null
+        if (b) { e.preventDefault(); if (canBack()) window.history.back() }
+      })
+      function toggle() {
+        var b = document.querySelector("[data-qg-back]")
+        if (b) b.style.visibility = canBack() ? "visible" : "hidden"
+      }
+      document.addEventListener("nav", toggle)
+      if (document.readyState !== "loading") toggle()
+      else document.addEventListener("DOMContentLoaded", toggle)
+    })()
+  `)
+
   // the abyss — animated black hole video background + cosmic click sound
   componentResources.afterDOMLoaded.push(`
     ;(function () {
