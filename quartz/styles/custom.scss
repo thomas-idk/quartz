@@ -759,6 +759,8 @@ a.tag-link,
   .page-listing .section-ul { list-style: none; margin: 0; padding: 0; }
   .section-li { margin: 0; }
   .section-li .section {
+    position: relative;
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 13px;
@@ -767,13 +769,20 @@ a.tag-link,
     transition: background 0.2s;
     &:hover { background: var(--qg-row-hover); }
     & .meta { order: 3; margin: 0 0 0 auto; font: 400 12px #{$ui}; color: var(--qg-dim); white-space: nowrap; }
-    & .desc { order: 2; }
+    & .desc { order: 2; min-width: 0; }
     & h3 {
       margin: 0;
       font-family: $serif;
       font-weight: 500;
       font-size: 18px;
-      & a { color: var(--qg-ink); text-decoration: none !important; &:hover { color: var(--qg-accent-hi); } }
+      & a {
+        color: var(--qg-ink);
+        text-decoration: none !important;
+        &:hover { color: var(--qg-accent-hi); }
+        /* stretch the link across the whole row so the entire box — icon,
+           empty space, and date — is clickable, not just the title text */
+        &::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+      }
     }
     &::before { content: ""; order: 1; flex: none; width: 15px; height: 18px; border: 1.7px solid var(--qg-fileglyph); border-radius: 2px; }
     & .tags { display: none; }
