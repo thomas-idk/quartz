@@ -437,6 +437,21 @@ a {
   &:hover, &.focus { background: var(--qg-row-hover); }
   & .internal { font-family: $serif; color: var(--qg-ink); }
 }
+/* single full-width results list (preview disabled) so the whole row is the
+   clickable link — no narrow results column with an empty preview pane beside it */
+.search .search-space > .search-layout {
+  flex-direction: column;
+  border: none;
+}
+.search .search-space > .search-layout > .results-container {
+  flex: 1 1 auto;
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+}
+.search .search-space > .search-layout > .preview-container { display: none !important; }
+.search .result-card { width: 100%; display: block; box-sizing: border-box; }
+.search .result-card .card-title { margin: 0; }
 
 /* ============================================================ HOME */
 .home { animation: qgFadeUp 0.6s ease both; }

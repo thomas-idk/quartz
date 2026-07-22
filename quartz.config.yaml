@@ -164,6 +164,8 @@ plugins:
       priority: 10
   - source: github:quartz-community/search
     enabled: true
+    options:
+      enablePreview: false
     layout:
       position: left
       priority: 20
