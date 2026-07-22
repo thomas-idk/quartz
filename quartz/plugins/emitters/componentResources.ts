@@ -84,10 +84,19 @@ async function joinScripts(scripts: string[]): Promise<string> {
 function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentResources) {
   const cfg = ctx.cfg.configuration
 
-  // the quiet garden is dark-only: force the dark theme before first paint so
-  // the blackhole video always shows and there's never a light-mode flash.
+  // Dark is the default theme (light is opt-in via the toggle). Set it before
+  // first paint to avoid a flash, but respect a previously chosen theme. The
+  // darkmode plugin handles toggling + persistence from there.
   componentResources.beforeDOMLoaded.push(`
-    document.documentElement.setAttribute("saved-theme", "dark")
+    ;(function () {
+      try {
+        var t = localStorage.getItem("theme")
+        if (t !== "light" && t !== "dark") { t = "dark"; localStorage.setItem("theme", "dark") }
+        document.documentElement.setAttribute("saved-theme", t)
+      } catch (e) {
+        document.documentElement.setAttribute("saved-theme", "dark")
+      }
+    })()
   `)
 
   // wire the top-bar "← Back" button. It's a bespoke frame component, so its
@@ -110,20 +119,21 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
     })()
   `)
 
-  // the abyss — animated black hole video background + cosmic click sound
+  // full-screen background video (blackhole in dark, drifting sky in light,
+  // swapped on theme change) + the cosmic click sound
   componentResources.afterDOMLoaded.push(`
     ;(function () {
       if (window.__abyssInit) return
       window.__abyssInit = true
 
-      function videoUrl() {
+      function staticUrl(name) {
         var el = document.querySelector('link[href*="static/"], script[src*="static/"]')
         if (el) {
           var abs = el.href || el.src
           var i = abs.indexOf("static/")
-          if (i >= 0) return abs.slice(0, i) + "static/blackhole.mp4"
+          if (i >= 0) return abs.slice(0, i) + "static/" + name
         }
-        return new URL("static/blackhole.mp4", document.baseURI).href
+        return new URL("static/" + name, document.baseURI).href
       }
 
       function tryPlay(v) {
@@ -137,11 +147,9 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
       // play() — retry silently on the first tap/scroll/keypress and whenever
       // the tab becomes visible again, instead of showing a paused video
       function armAutoplayRescue(v) {
-        if (v.__abyssArmed) return
-        v.__abyssArmed = true
-        function kick() {
-          if (document.documentElement.getAttribute("saved-theme") === "dark" && v.paused) tryPlay(v)
-        }
+        if (v.__qgArmed) return
+        v.__qgArmed = true
+        function kick() { if (v.style.display !== "none" && v.paused) tryPlay(v) }
         ;["pointerdown", "touchend", "click", "keydown", "scroll"].forEach(function (t) {
           window.addEventListener(t, kick, { passive: true })
         })
@@ -150,44 +158,52 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
         })
       }
 
+      // lazily build a full-screen background <video>. Only the active theme's
+      // clip is ever downloaded (blackhole for dark, the sky for light).
+      function makeVideo(id, file) {
+        var v = document.createElement("video")
+        v.id = id
+        // every autoplay hint goes on BEFORE the src so mobile browsers
+        // classify it as a silent background video from the start
+        v.muted = true; v.defaultMuted = true
+        v.autoplay = true; v.loop = true; v.playsInline = true
+        v.preload = "auto"
+        v.setAttribute("muted", ""); v.setAttribute("autoplay", ""); v.setAttribute("loop", "")
+        v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "")
+        v.setAttribute("disablepictureinpicture", ""); v.setAttribute("disableremoteplayback", "")
+        v.setAttribute("aria-hidden", "true"); v.setAttribute("tabindex", "-1")
+        // only fade in once frames are actually rendering — a blocked autoplay
+        // shows the clean backdrop, never a resume button
+        v.addEventListener("playing", function () { v.classList.add("is-playing") })
+        v.addEventListener("pause", function () { v.classList.remove("is-playing") })
+        v.src = staticUrl(file)
+        document.documentElement.appendChild(v)
+        tryPlay(v)
+        armAutoplayRescue(v)
+        return v
+      }
+
+      function show(v) { if (v) { v.style.display = ""; if (v.paused) tryPlay(v) } }
+      function hide(v) { if (v) v.style.display = "none" }
+
+      // swap the background to match the active theme; the overlay is always
+      // present and restyled per theme by CSS (see #abyss-overlay in custom.scss)
       function ensureBg() {
-        var dark = document.documentElement.getAttribute("saved-theme") === "dark"
-        var v = document.getElementById("abyss-video")
-        var o = document.getElementById("abyss-overlay")
-        if (dark) {
-          if (!o) {
-            o = document.createElement("div")
-            o.id = "abyss-overlay"
-            o.setAttribute("aria-hidden", "true")
-            document.documentElement.appendChild(o)
-          } else { o.style.display = "" }
-          if (!v) {
-            v = document.createElement("video")
-            v.id = "abyss-video"
-            // every autoplay hint goes on BEFORE the src so mobile browsers
-            // classify it as a silent background video from the start
-            v.muted = true; v.defaultMuted = true
-            v.autoplay = true; v.loop = true; v.playsInline = true
-            v.preload = "auto"
-            v.setAttribute("muted", ""); v.setAttribute("autoplay", ""); v.setAttribute("loop", "")
-            v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "")
-            v.setAttribute("disablepictureinpicture", ""); v.setAttribute("disableremoteplayback", "")
-            v.setAttribute("aria-hidden", "true"); v.setAttribute("tabindex", "-1")
-            // only fade in once frames are actually rendering — a blocked
-            // autoplay shows the clean dark backdrop, never a resume button
-            v.addEventListener("playing", function () { v.classList.add("is-playing") })
-            v.addEventListener("pause", function () { v.classList.remove("is-playing") })
-            v.src = videoUrl()
-            document.documentElement.appendChild(v)
-            tryPlay(v)
-            armAutoplayRescue(v)
-          } else {
-            v.style.display = ""
-            if (v.paused) tryPlay(v)
-          }
+        var light = document.documentElement.getAttribute("saved-theme") === "light"
+        if (!document.getElementById("abyss-overlay")) {
+          var o = document.createElement("div")
+          o.id = "abyss-overlay"
+          o.setAttribute("aria-hidden", "true")
+          document.documentElement.appendChild(o)
+        }
+        var dark = document.getElementById("abyss-video")
+        var day = document.getElementById("daylight-video")
+        if (light) {
+          if (!day) day = makeVideo("daylight-video", "daylight.mp4")
+          show(day); hide(dark)
         } else {
-          if (v) v.style.display = "none"
-          if (o) o.style.display = "none"
+          if (!dark) dark = makeVideo("abyss-video", "blackhole.mp4")
+          show(dark); hide(day)
         }
       }
 

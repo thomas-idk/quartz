@@ -1,8 +1,1 @@
 === publish-now start ===
-warning: in the working copy of 'publish-now.log', CRLF will be replaced by LF the next time Git touches it
-[main 04a2525] Quiet Garden theme reskin
- 1 file changed, 1 insertion(+), 4 deletions(-)
-To https://github.com/thomas-idk/quartz.git
-   7c6d962..04a2525  main -> main
-=== push exit code: 0 ===     
-04a25255d9fdf2a54da094b055b1e1be5278592a
