@@ -155,8 +155,60 @@
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLb(); });
   document.addEventListener("nav", closeLb);
 
+  /* ================= the abyss -> standalone piece =================
+   * "The Abyss" is not rendered as a normal note. Clicking it anywhere on the
+   * site (explorer, folder listing, wikilink) hands off to a self-contained
+   * page at static/scare/ that owns the whole viewport and its own scrolling.
+   *
+   * Two paths, both deliberate:
+   *   1. capture-phase click — beats Quartz's SPA router to the link so the
+   *      browser does a REAL page load. The piece boots on DOMContentLoaded,
+   *      which an SPA morph never fires, so an SPA hop would leave it blank.
+   *   2. nav fallback — for anyone who lands on the note URL directly
+   *      (typed, bookmarked, browser back), send them on.
+   *
+   * Scoped to this one slug. Nothing else on the site is touched, and this
+   * file is never loaded by the standalone page itself.
+   * To undo: delete this block. The note then renders as a normal page again.
+   */
+  var abyssScript = document.querySelector('script[src*="static/qg-enhance.js"]');
+  var SITE_ROOT = abyssScript ? abyssScript.src.replace(/static\/qg-enhance\.js.*$/, "") : "/";
+  var ABYSS_TARGET = SITE_ROOT + "static/scare/";
+
+  function isAbyssPath(pathname) {
+    var p;
+    try { p = decodeURIComponent(pathname); } catch (e) { p = pathname; }
+    return /\/the-abyss\/?$/.test(p.replace(/\.html$/, ""));
+  }
+
+  document.addEventListener("click", function (e) {
+    if (e.defaultPrevented || e.button !== 0) return;
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return; // let open-in-new-tab work
+    var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+    if (!a) return;
+    var u;
+    try { u = new URL(a.getAttribute("href"), location.href); } catch (err) { return; }
+    if (u.origin !== location.origin || !isAbyssPath(u.pathname)) return;
+    e.preventDefault();
+    e.stopPropagation(); // keep it away from the SPA router on window
+    location.assign(ABYSS_TARGET);
+  }, true);
+
+  function abyssGuard() { if (isAbyssPath(location.pathname)) location.replace(ABYSS_TARGET); }
+  document.addEventListener("nav", abyssGuard);
+
+  // don't let hover-popovers preview the note and spoil the handoff
+  function abyssNoPopover() {
+    var all = document.querySelectorAll("a[href]"), i, u;
+    for (i = 0; i < all.length; i++) {
+      try { u = new URL(all[i].getAttribute("href"), location.href); } catch (err) { continue; }
+      if (u.origin === location.origin && isAbyssPath(u.pathname)) all[i].dataset.noPopover = "true";
+    }
+  }
+  document.addEventListener("nav", function () { setTimeout(abyssNoPopover, 0); });
+
   /* ---- initial run ---- */
-  function init() { ambReflect(); progress(); addCopy(); }
+  function init() { abyssGuard(); ambReflect(); progress(); addCopy(); }
   if (document.readyState !== "loading") init();
   else document.addEventListener("DOMContentLoaded", init);
 })();
