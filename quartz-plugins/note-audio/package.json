@@ -4,8 +4,8 @@
   "description": "Sidebar audio player for notes narrated by the Kokoro render pipeline.",
   "type": "module",
   "exports": {
-    ".": "./index.js",
-    "./components": "./index.js"
+    ".": "./dist/index.js",
+    "./components": "./dist/index.js"
   },
   "quartz": {
     "name": "note-audio",

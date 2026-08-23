@@ -163,6 +163,12 @@
       "commit": "3dcfedcb5ae5e28b71248a72665ccb881e82c185",
       "installedAt": "2026-07-08T18:37:34.857Z"
     },
+    "note-audio": {
+      "source": "./quartz-plugins/note-audio",
+      "resolved": "/home/thomas/quartz/quartz-plugins/note-audio",
+      "commit": "local",
+      "installedAt": "2026-08-23T13:20:26.363Z"
+    },
     "note-properties": {
       "source": "github:quartz-community/note-properties",
       "resolved": "https://github.com/quartz-community/note-properties.git",
