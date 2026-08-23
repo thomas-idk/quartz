@@ -1,6 +1,8 @@
 ---
 type: original
 category: poetry
+audio: ✍️ Writing/🌙 poetry/the-abyss-7984fead.mp3
+audio_hash: 7984feadf5bfd310ae7f7f2a1fbed0117b58ab547d336b0f32ef6990a3da49bd
 ---
 [[Hinge Propositions]] is like an abyss  
 if you'd jump down it, you would just fall endlessly  
