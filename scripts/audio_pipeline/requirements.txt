@@ -1,0 +1,11 @@
+# Note narration pipeline dependencies.
+# Not installed by this session on purpose — see the "stop before first
+# render" note in the repo's audio pipeline docs. Install with:
+#   python3 -m pip install -r scripts/audio_pipeline/requirements.txt
+# and make sure `ffmpeg` is on PATH (used for the WAV -> MP3 encode step).
+
+kokoro>=0.9.4
+soundfile
+numpy
+mutagen
+PyYAML

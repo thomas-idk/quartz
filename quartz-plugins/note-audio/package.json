@@ -1,0 +1,25 @@
+{
+  "name": "note-audio",
+  "version": "1.0.0",
+  "description": "Sidebar audio player for notes narrated by the Kokoro render pipeline.",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./components": "./index.js"
+  },
+  "quartz": {
+    "name": "note-audio",
+    "displayName": "Note Audio",
+    "description": "Sidebar play/pause card for notes that have been narrated by the local Kokoro render pipeline (scripts/audio_pipeline/render.py).",
+    "version": "1.0.0",
+    "category": "component",
+    "components": {
+      "NoteAudio": {
+        "displayName": "Note Audio",
+        "description": "Play/pause card, progress bar, and download link for a note's narrated audio. Renders nothing unless the note's frontmatter audio_hash matches a build-time hash of the cleaned note text.",
+        "defaultPosition": "right",
+        "defaultPriority": 40
+      }
+    }
+  }
+}

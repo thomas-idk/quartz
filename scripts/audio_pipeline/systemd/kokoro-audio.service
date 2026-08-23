@@ -1,0 +1,27 @@
+# NOT installed. This is provided for when you're ready to schedule the
+# pipeline; nothing here runs automatically just by this file existing in
+# the repo.
+#
+# To install (as your own user, not root — it needs your git credentials
+# and the repo checkout):
+#   mkdir -p ~/.config/systemd/user
+#   cp scripts/audio_pipeline/systemd/kokoro-audio.* ~/.config/systemd/user/
+#   # edit the WorkingDirectory= path below if this checkout isn't at
+#   # /home/thomas/quartz
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now kokoro-audio.timer
+#
+# CPUQuota=100% caps this at roughly one core regardless of how many threads
+# the model runtime spawns underneath (belt-and-suspenders with the
+# sched_setaffinity call render.py already does itself).
+
+[Unit]
+Description=Note narration pipeline (Kokoro)
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/thomas/quartz
+ExecStart=/usr/bin/python3 -m scripts.audio_pipeline.render
+CPUQuota=100%
+Nice=19
+IOSchedulingClass=idle

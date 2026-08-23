@@ -1,0 +1,15 @@
+# NOT installed — see kokoro-audio.service for install steps.
+# Hourly, offset from the Windows publish-guard schedule isn't required
+# (the pipeline itself pulls --rebase and retries on a rejected push), but
+# a bit of jitter is polite to the disk/CPU anyway.
+
+[Unit]
+Description=Run the note narration pipeline hourly
+
+[Timer]
+OnCalendar=hourly
+RandomizedDelaySec=300
+Persistent=true
+
+[Install]
+WantedBy=timers.target

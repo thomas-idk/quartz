@@ -11,3 +11,9 @@ replit.nix
 .quartz/
 quartz/cli/tui/dist/
 run-autopush-hidden.vbs
+
+# Audio narration pipeline: local run state, not shared between machines.
+.audio-pipeline.lock
+.audio-pipeline.log
+__pycache__/
+*.pyc

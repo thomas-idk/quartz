@@ -1,0 +1,50 @@
+[
+  {
+    "name": "frontmatter_and_heading",
+    "input": "---\ntitle: Test\ntags:\n  - a\n  - b\n---\n# Hello World\n\nSome text.\n"
+  },
+  {
+    "name": "wikilink_plain",
+    "input": "See [[Hinge Propositions]] for more.\n"
+  },
+  {
+    "name": "wikilink_with_alias",
+    "input": "See [[Hinge Propositions|the hinges]] and [[Some Note#Section|a section]] plus [[Other Note^blockref]].\n"
+  },
+  {
+    "name": "nested_code_blocks",
+    "input": "Here's how to write a fence:\n\n````markdown\nText before.\n```\nsome code\n```\nText after.\n````\n\nAnd inline `code` too, plus ``code with ` backtick``.\n"
+  },
+  {
+    "name": "footnotes",
+    "input": "This has a footnote.[^1] And another.[^note-two]\n\n[^1]: This is the first footnote definition.\n[^note-two]: This is the second one.\n\nMore text after.\n"
+  },
+  {
+    "name": "table",
+    "input": "Intro paragraph.\n\n| Name | Value |\n| --- | --- |\n| a | 1 |\n| b | 2 |\n\nOutro paragraph.\n"
+  },
+  {
+    "name": "unicode",
+    "input": "✨ Emoji and unicode: café, naïve, 你好, مرحبا, — an em dash, ‘curly quotes’, and combining: é (e + combining acute).\n"
+  },
+  {
+    "name": "links_and_urls",
+    "input": "Check [this article](https://example.com/path?q=1) or just https://example.com/bare and www.example.com/also-bare, or <https://example.com/angle>.\n"
+  },
+  {
+    "name": "lists_and_blockquotes",
+    "input": "> [!note] How this is organised\n> Every note lives somewhere.\n\n- First item\n- Second item\n1. Numbered one\n2. Numbered two\n"
+  },
+  {
+    "name": "emphasis_and_residual_markup",
+    "input": "This is **bold**, this is *italic*, this is _also italic_, and this is ~~struck~~ text.\n"
+  },
+  {
+    "name": "mixed_realistic_note",
+    "input": "---\ntype: original\ntags:\n  - philosophy\naliases:\n  - Hinges\n---\n# Hinge Propositions\n\nSee [[On Certainty|Wittgenstein's book]] and this [link](https://example.com).[^1]\n\n## A table\n\n| Term | Meaning |\n| --- | --- |\n| Hinge | A hinge proposition |\n\n> [!note]\n> Some callout text.\n\n- bullet one\n- bullet two\n\n```python\ndef f():\n    return 1\n```\n\nInline `code` here. éèê unicode too.\n\n[^1]: A footnote definition.\n"
+  },
+  {
+    "name": "crlf_line_endings",
+    "input": "---\r\ntitle: CRLF\r\n---\r\n# Heading\r\n\r\nSome [[Link|text]] here.\r\n"
+  }
+]

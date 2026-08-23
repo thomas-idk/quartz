@@ -271,6 +271,11 @@ plugins:
       darkMode: auto
       exportPadding: 20
     order: 50
+  - source: ./quartz-plugins/note-audio
+    enabled: true
+    layout:
+      position: right
+      priority: 40
 layout:
   groups:
     toolbar:
