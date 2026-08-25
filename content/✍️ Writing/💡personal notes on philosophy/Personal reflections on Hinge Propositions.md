@@ -6,6 +6,8 @@ tags:
   - personal
 aliases:
   - Hinge Reflections
+audio: ✍️ Writing/💡personal notes on philosophy/personal-reflections-on-hinge-propositions-7525cd7e.mp3
+audio_hash: 7525cd7ed0fe68e1e205142ff64108aa4daa6c1ad83e11d864f2c377701947ab
 ---
 
 # Personal reflections on Hinge Propositions
