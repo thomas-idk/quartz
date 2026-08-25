@@ -1,3 +1,7 @@
+---
+audio: ✍️ Writing/💡personal notes on philosophy/quick-video-clip-of-reflective-equilibrium-fd38b006.mp3
+audio_hash: fd38b00614a68e15202ce57b303a81068d2ca9d3b003977467726d74c71ce017
+---
 Alex o'connor in "Debating Morality With Philosophical Legends", where he debated the likes of Peter Singer and other 'legends'. Full video: https://www.youtube.com/watch?v=rI1OevN2FDI
 ![[reflective-equilibrium-clip.mp4]]
 
