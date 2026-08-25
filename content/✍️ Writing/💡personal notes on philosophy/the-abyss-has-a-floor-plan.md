@@ -8,7 +8,6 @@ tags:
 aliases:
   - The Abyss Has a Floor Plan
 source: the-abyss-has-a-floor-plan.pptx
-private: true
 ---
 
 # The Abyss Has a Floor Plan

@@ -363,14 +363,7 @@ def process_note(note_path: Path, repo_root: Path) -> bool:
     raw = note_path.read_text(encoding="utf-8")
     frontmatter, body = split_frontmatter(raw)
 
-    if frontmatter.get("noaudio") or frontmatter.get("private"):
-        # `private` is not enforced by any publish filter in this Quartz
-        # config (checked: only `draft` is), so a private note's page is
-        # otherwise served like any other. The one thing this pipeline
-        # controls is not compounding that by also narrating it -- a
-        # rendered MP3 would sit under content/ and get published by the
-        # Assets emitter regardless of the note's own listedness, since that
-        # emitter globs by file type, not by frontmatter.
+    if frontmatter.get("noaudio"):
         return False
 
     cleaned = clean_note_text(raw)
