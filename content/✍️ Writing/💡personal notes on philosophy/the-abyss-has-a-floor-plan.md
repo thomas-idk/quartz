@@ -8,6 +8,8 @@ tags:
 aliases:
   - The Abyss Has a Floor Plan
 source: the-abyss-has-a-floor-plan.pptx
+audio: ✍️ Writing/💡personal notes on philosophy/the-abyss-has-a-floor-plan-5f6c1c3c.mp3
+audio_hash: 5f6c1c3c4bd6ece3b12f581bb3cdf1d09b2607ca504b115bc528f64e0d8938ba
 ---
 
 # The Abyss Has a Floor Plan
