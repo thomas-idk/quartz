@@ -276,6 +276,18 @@ plugins:
     layout:
       position: right
       priority: 10
+  # Second registration of the same plugin: .qg-right is display:none below
+  # 800px (see quartz/styles/custom.scss), so the sidebar copy above is
+  # invisible on mobile. Listening on mobile is the main use case, so this
+  # duplicate renders the same component inline in the content column,
+  # mobile-only, right under the title. TOC's mobile behavior is untouched --
+  # this doesn't add a second entry for table-of-contents, just for us.
+  - source: ./quartz-plugins/note-audio
+    enabled: true
+    layout:
+      position: beforeBody
+      priority: 12
+      display: mobile-only
 layout:
   groups:
     toolbar:
