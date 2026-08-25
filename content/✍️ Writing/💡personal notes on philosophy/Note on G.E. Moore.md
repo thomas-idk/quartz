@@ -2,6 +2,8 @@
 type: original
 tags:
   - philosophy/morality
+audio: ✍️ Writing/💡personal notes on philosophy/note-on-g-e-moore-b439803b.mp3
+audio_hash: b439803b94503d590c3a461df62a6199f12c27bb240e111a69d48c92e9ea721a
 ---
 Regarding [[Principia Ethica - G.E. Moore]]
 
