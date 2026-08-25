@@ -36,6 +36,7 @@ from scripts.audio_pipeline.clean_text import clean_note_text, hash_clean_text
 
 LOCK_PATH = ".audio-pipeline.lock"
 LOG_PATH = ".audio-pipeline.log"
+SCRATCH_DIR = ".audio-pipeline-tmp"  # gitignored; never inside content/
 
 log = logging.getLogger("audio_pipeline")
 
@@ -269,18 +270,30 @@ def tag_mp3(mp3_path: Path, title: str) -> None:
     audio.save()
 
 
-def render_audio_atomically(cleaned_text: str, title: str, dest_path: Path) -> None:
-    """Render to a temp path in the same directory, then atomically move into
-    place. Never leaves a partial MP3 where the committer can see it."""
+def render_audio_atomically(cleaned_text: str, title: str, dest_path: Path, scratch_dir: Path) -> None:
+    """Render to a temp path, then atomically move into place. Never leaves a
+    partial MP3 where the committer can see it.
+
+    The temp files live in `scratch_dir` (a gitignored directory outside
+    content/), not next to dest_path. `os.replace` only needs same-filesystem
+    to be atomic, not same-directory -- so this still gets atomicity, but a
+    process that dies from an uncatchable signal (OOM kill, `kill -9`) instead
+    of a normal Python exception leaves its debris somewhere that can never
+    be picked up by a `git add -A` on either machine, and is outside
+    content/ so Quartz's Assets emitter can never publish it either. A
+    `finally` block can't run after SIGKILL, so this is the thing that
+    actually has to hold up under that failure mode, not the try/finally.
+    """
     dest_path.parent.mkdir(parents=True, exist_ok=True)
+    scratch_dir.mkdir(parents=True, exist_ok=True)
     tmp_id = uuid.uuid4().hex
-    tmp_wav = dest_path.parent / f".tmp-{tmp_id}.wav"
-    tmp_mp3 = dest_path.parent / f".tmp-{tmp_id}.mp3"
+    tmp_wav = scratch_dir / f"{tmp_id}.wav"
+    tmp_mp3 = scratch_dir / f"{tmp_id}.mp3"
     try:
         synthesize_to_wav(cleaned_text, tmp_wav, config.KOKORO_VOICE)
         encode_mp3(tmp_wav, tmp_mp3, config.MP3_BITRATE_KBPS)
         tag_mp3(tmp_mp3, title)
-        os.replace(tmp_mp3, dest_path)  # atomic on the same filesystem
+        os.replace(tmp_mp3, dest_path)  # atomic (same filesystem, not same dir)
     finally:
         tmp_wav.unlink(missing_ok=True)
         tmp_mp3.unlink(missing_ok=True)
@@ -350,7 +363,14 @@ def process_note(note_path: Path, repo_root: Path) -> bool:
     raw = note_path.read_text(encoding="utf-8")
     frontmatter, body = split_frontmatter(raw)
 
-    if frontmatter.get("noaudio"):
+    if frontmatter.get("noaudio") or frontmatter.get("private"):
+        # `private` is not enforced by any publish filter in this Quartz
+        # config (checked: only `draft` is), so a private note's page is
+        # otherwise served like any other. The one thing this pipeline
+        # controls is not compounding that by also narrating it -- a
+        # rendered MP3 would sit under content/ and get published by the
+        # Assets emitter regardless of the note's own listedness, since that
+        # emitter globs by file type, not by frontmatter.
         return False
 
     cleaned = clean_note_text(raw)
@@ -379,7 +399,7 @@ def process_note(note_path: Path, repo_root: Path) -> bool:
         if candidate.exists() and candidate != new_mp3_path.resolve():
             old_mp3_path = candidate
 
-    render_audio_atomically(cleaned, title, new_mp3_path)
+    render_audio_atomically(cleaned, title, new_mp3_path, repo_root / SCRATCH_DIR)
 
     if old_mp3_path is not None:
         old_mp3_path.unlink(missing_ok=True)
@@ -419,6 +439,15 @@ def main() -> int:
             # Overlapping runs are the main failure mode here — exit quietly,
             # this is expected under a cron/timer schedule.
             return 0
+
+        # Clear debris from a previous run that died mid-render (OOM kill,
+        # power loss -- anything that skipped render_audio_atomically's
+        # `finally`). Safe: the lock guarantees nothing else can be using
+        # this directory right now.
+        scratch_dir = repo_root / SCRATCH_DIR
+        if scratch_dir.is_dir():
+            for stale in scratch_dir.iterdir():
+                stale.unlink(missing_ok=True)
 
         try:
             git_pull_rebase(repo_root)

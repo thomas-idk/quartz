@@ -21,7 +21,11 @@ Description=Note narration pipeline (Kokoro)
 [Service]
 Type=oneshot
 WorkingDirectory=/home/thomas/quartz
-ExecStart=/usr/bin/python3 -m scripts.audio_pipeline.render
+# Dependencies (kokoro, torch, mutagen, ...) live in the repo-local venv, not
+# system Python. ffmpeg is a static binary in ~/.local/bin -- systemd user
+# units don't inherit an interactive shell's PATH, so it's set explicitly.
+Environment=PATH=/home/thomas/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/home/thomas/quartz/.venv/bin/python3 -m scripts.audio_pipeline.render
 CPUQuota=100%
 Nice=19
 IOSchedulingClass=idle

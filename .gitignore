@@ -15,5 +15,7 @@ run-autopush-hidden.vbs
 # Audio narration pipeline: local run state, not shared between machines.
 .audio-pipeline.lock
 .audio-pipeline.log
+.audio-pipeline-tmp/
 __pycache__/
 *.pyc
+.venv/
