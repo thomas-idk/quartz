@@ -4,6 +4,8 @@ tags:
   - writing
 aliases:
   - My Writing
+audio: ✍️ Writing/read-me-bcc502c2.mp3
+audio_hash: bcc502c266a92fccb4988e56d76dd2b586e202141ea007162a3ed81da846f949
 ---
 
 # ✍️ Writing
