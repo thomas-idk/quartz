@@ -8,6 +8,8 @@ aliases:
   - Hinge Epistemology
   - Propositions
 source: Ludwig Wittgenstein, *On Certainty* (1969)
+audio: ✍️ Writing/💡personal notes on philosophy/hinge-propositions-9df3895e.mp3
+audio_hash: 9df3895ee391abbc2c85d85ae5ce5b10aef43cb8e51f0f5283dc6baac6330d71
 ---
 note from me (Thomas), when there's a reference to G.E. Moore below, it's because On Certainty, the book this idea originates from, starts off with a couple manuscripts that refer to Moore's argument. Moore claimed he could *know*, for certain, that an external world exists, just by holding up his hand and saying "here is a hand." Wittgenstein doesn't think that's wrong exactly, he thinks it's the word "know" that's doing something weird there, and he uses Moore's example in his opening manuscripts to show us the puzzle, before eventually giving the 'solution', which is hinge propositions.
 
