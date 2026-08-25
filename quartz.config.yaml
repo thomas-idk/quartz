@@ -275,7 +275,7 @@ plugins:
     enabled: true
     layout:
       position: right
-      priority: 40
+      priority: 10
 layout:
   groups:
     toolbar:
