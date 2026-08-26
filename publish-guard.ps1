@@ -16,14 +16,14 @@
 #      your notes, and publishes any new edits as normal.
 #
 #  Backups + logs live OUTSIDE the repo so they never sync:
-#      C:\Users\Me1Io\Desktop\Quartz Backups
+#      C:\Users\Me1Io\Desktop\Projects\Quartz Backups
 # ============================================================
 
 $ErrorActionPreference = 'SilentlyContinue'
 
 $repo       = 'C:\Users\Me1Io\Desktop\quartz'
 $content    = Join-Path $repo 'content'          # junction -> Obsidian Vault\Published
-$backupRoot = 'C:\Users\Me1Io\Desktop\Quartz Backups'
+$backupRoot = 'C:\Users\Me1Io\Desktop\Projects\Quartz Backups'
 $log        = Join-Path $backupRoot 'guard.log'
 $goodHashF  = Join-Path $backupRoot 'last_good_hash.txt'
 $goodCountF = Join-Path $backupRoot 'last_good_count.txt'
