@@ -119,6 +119,43 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
     })()
   `)
 
+  // recompute the "Recently edited" relative timestamps in the browser. Rendered
+  // server-side they freeze at build time ("14 minutes ago" forever), so the
+  // component emits <time data-qg-when datetime="..."> and we relabel it from the
+  // reader's clock — on load, on SPA nav, and once a minute while the page is open.
+  componentResources.afterDOMLoaded.push(`
+    ;(function () {
+      function relTime(then, now) {
+        var s = Math.max(1, Math.floor((now - then) / 1000))
+        var mins = Math.floor(s / 60)
+        var hrs = Math.floor(s / 3600)
+        var days = Math.floor(s / 86400)
+        if (s < 60) return "just now"
+        if (mins < 60) return mins + (mins === 1 ? " minute ago" : " minutes ago")
+        if (hrs < 24) return hrs + (hrs === 1 ? " hour ago" : " hours ago")
+        if (days === 1) return "yesterday"
+        if (days < 7) return days + " days ago"
+        if (days < 30) { var w = Math.floor(days / 7); return w + (w === 1 ? " week ago" : " weeks ago") }
+        if (days < 365) { var m = Math.floor(days / 30); return m + (m === 1 ? " month ago" : " months ago") }
+        var y = Math.floor(days / 365)
+        return y + (y === 1 ? " year ago" : " years ago")
+      }
+      function refresh() {
+        var now = Date.now()
+        var els = document.querySelectorAll("[data-qg-when]")
+        for (var i = 0; i < els.length; i++) {
+          var t = Date.parse(els[i].getAttribute("datetime"))
+          if (!isNaN(t)) els[i].textContent = relTime(t, now)
+        }
+      }
+      document.addEventListener("nav", refresh)
+      document.addEventListener("render", refresh)
+      if (document.readyState !== "loading") refresh()
+      else document.addEventListener("DOMContentLoaded", refresh)
+      if (!window.__qgWhenTimer) window.__qgWhenTimer = setInterval(refresh, 60000)
+    })()
+  `)
+
   // full-screen background video (blackhole in dark, drifting sky in light,
   // swapped on theme change) + the cosmic click sound
   componentResources.afterDOMLoaded.push(`

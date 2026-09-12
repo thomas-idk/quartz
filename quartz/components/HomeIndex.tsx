@@ -92,13 +92,18 @@ const HomeIndex: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
     return folderTitle.get(prefix) ?? prettifySegment(slug.slice(0, i).split("/").pop() ?? "")
   }
 
+  // `now` is the *build* time, so relTime() here only produces a no-JS fallback.
+  // The live label is recomputed in the browser from the emitted `datetime`
+  // attribute — see the [data-qg-when] script in plugins/emitters/componentResources.ts.
   const now = new Date()
   const recents = notes
     .map((f) => {
       const raw = (f as any).dates?.modified
       return { f, m: raw ? new Date(raw) : null }
     })
-    .filter((x): x is { f: (typeof notes)[number]; m: Date } => x.m !== null && !isNaN(x.m.getTime()))
+    .filter(
+      (x): x is { f: (typeof notes)[number]; m: Date } => x.m !== null && !isNaN(x.m.getTime()),
+    )
     .sort((a, b) => b.m.getTime() - a.m.getTime())
     .slice(0, RECENTS_LIMIT)
     .map(({ f, m }) => {
@@ -107,6 +112,7 @@ const HomeIndex: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
         title: (f as any).frontmatter?.title ?? slug.split("/").pop(),
         href: resolveRelative(here, slug as FullSlug),
         when: relTime(m, now),
+        iso: m.toISOString(),
         parent: parentLabel(slug),
       }
     })
@@ -143,7 +149,10 @@ const HomeIndex: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
               <a class="qg-recent" href={r.href}>
                 <span class="qg-recent-t">{r.title}</span>
                 <span class="qg-recent-m">
-                  {r.when} · {r.parent}
+                  <time data-qg-when datetime={r.iso}>
+                    {r.when}
+                  </time>
+                  {` · ${r.parent}`}
                 </span>
               </a>
             ))}
